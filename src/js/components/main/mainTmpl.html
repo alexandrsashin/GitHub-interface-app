@@ -1,0 +1,102 @@
+<div class="flex-container app-panel">
+  <div class="flex-container__item app-panel__search">
+    <div class="flex-container__sub-item">
+      <label for="search">Введите логин и название репозитория:</label>      
+    </div>
+    <div class="flex-container__sub-item search">
+      <input type="text" 
+             id="search"
+             class="search__input" 
+             ng-keypress="$ctrl.bspClick($event)"
+             ng-model="$ctrl.appData.search">
+      <button class="btn search__btn"
+              ng-click="$ctrl.getIssues('search', $ctrl.appData.search)">Поиск
+      </button>
+      <div class="search__hint-block"
+           ng-show="$ctrl.appData.repoList.length !== 0 && !$ctrl.appData.repo">
+        <div class="search__hint"
+             ng-click="$ctrl.getIssues('repo', item)"
+             ng-repeat="item in $ctrl.appData.repoList | filter: $ctrl.searchFilter">{{$ctrl.appData.name}} {{item}}</div>
+      </div>
+    </div>
+  </div>
+  <div class="flex-container__item app-panel__page">
+    <div class="flex-container__sub-item">Текущая страница:</div>
+    <div class="flex-container__sub-item app-panel__page-number"
+         ng-bind="$ctrl.appData.currentPage"></div>
+  </div>
+  <div class="flex-container__item app-panel__items-number">
+    <div class="flex-container__sub-item">Issues на странице:</div>
+    <div class="flex-container__sub-item app-panel__items-input-box">
+      <input type="text"
+             maxlength="2"
+             class="app-panel__items-input"
+             ng-model="$ctrl.appData.issueNumber">
+    </div>
+  </div>
+</div>
+<div class="text">
+  Логин: <span ng-bind="$ctrl.appData.name"></span> <span ng-show="$ctrl.appData.errorUser">(Not Found)</span>
+</div>
+<div class="text">
+  Репозиторий: <span ng-bind="$ctrl.appData.repo"></span> <span ng-show="$ctrl.appData.errorRepo">(Not Found)</span>
+</div>
+<div ng-hide="$ctrl.appData.issueArr.length === 0">
+  <div class="issues">
+    <ul class="issues__list">
+      <li class="issues__item"
+          ng-repeat="item in $ctrl.showIssues()">
+        <p class="text">
+          <span>{{item.number}}</span> <span>{{item.title}}</span> (<a class="issues__href"
+                ui-sref="add-info({index: $ctrl.getIssueIndex($index)})">read...</a>)
+        </p>        
+        <p class="text text_comment">{{item.created_at | date:'yyyy-MM-dd HH:mm:ss'}}</p>
+        <div class="comment issues__comment">
+          <div class="comment__img-wrapper">
+            <img class="comment__img"
+                 width="40"
+                 alt="{{item.user.login}}" 
+                 ng-src="{{item.user.avatar_url}}">
+          </div>
+          <div class="comment__user">
+            <p class="comment__user-login">{{item.user.login}}</p>
+            <a class="comment__user-url" 
+               href="{{item.user.html_url}}"
+               target="_blank"
+               ng-bind="item.user.html_url"></a>
+          </div>
+        </div>       
+      </li>
+    </ul>
+  </div>
+  <ul class="pagination">
+    <li class="pagination__item" 
+        ng-class="{'disabled': $ctrl.appData.currentPage === 1}" 
+        ng-click="$ctrl.appData.currentPage = 1"><<
+    </li>
+    <li class="pagination__item" 
+        ng-class="{'disabled': $ctrl.appData.currentPage === 1}" 
+        ng-click="$ctrl.appData.currentPage = $ctrl.appData.currentPage - 1"><
+    </li>
+    <li class="pagination__item" 
+        ng-bind="page + 1" 
+        ng-hide="$ctrl.appData.currentPage > page + 3 || $ctrl.appData.currentPage < page - 2"
+        ng-class="{'active': $ctrl.appData.currentPage - 1 == page}" 
+        ng-click="$ctrl.appData.currentPage = page + 1" 
+        ng-repeat="page in $ctrl.getPagination()"></li>
+    <li class="pagination__item" 
+        ng-class="{'disabled': $ctrl.appData.currentPage === $ctrl.appData.totalPages}" 
+        ng-click="$ctrl.appData.currentPage = $ctrl.appData.currentPage + 1">>
+    </li>
+    <li class="pagination__item" 
+        ng-class="{'disabled': $ctrl.appData.currentPage === $ctrl.appData.totalPages}" 
+        ng-click="$ctrl.appData.currentPage = $ctrl.appData.totalPages">>>
+    </li>
+  </ul>
+</div>
+<div class="text" 
+     ng-show="$ctrl.appData.issueArr.length === 0 && $ctrl.appData.repo">Список issues пустой.</div>
+<div class="loading" 
+     ng-show="$ctrl.loading">
+  <div class="loading__loader"></div>
+</div>

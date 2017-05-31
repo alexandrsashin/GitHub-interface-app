@@ -1,0 +1,85 @@
+<table class="custom-table">
+	<tr class="custom-table__row">
+		<td class="custom-table__cell" colspan="2"><span class="custom-table__subtitle">Issue</span></td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			title: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].title"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			id: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].id"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">			
+			number: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].number"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			state: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].state"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			created: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].created_at | date:'yyyy-MM-dd HH:mm:ss'"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			updated: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].updated_at | date:'yyyy-MM-dd HH:mm:ss'"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			comments: 
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].comments"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell" colspan="2"><span class="custom-table__subtitle">User</span></td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			login:
+		</td>
+		<td class="custom-table__cell">
+			<span ng-bind="$ctrl.appData.issueArr[$ctrl.index].user.login"></span>
+		</td>
+	</tr>
+	<tr class="custom-table__row">
+		<td class="custom-table__cell">
+			url: 
+		</td>
+		<td class="custom-table__cell">
+			<a href="{{$ctrl.appData.issueArr[$ctrl.index].user.html_url}}"
+         target="_blank"
+         ng-bind="$ctrl.appData.issueArr[$ctrl.index].user.html_url"></a>
+		</td>
+	</tr>
+</table>
+<div class="btn-box">
+	<button class="btn" ui-sref="main">На главную</button>
+</div>
