@@ -7,16 +7,18 @@
   
     /* @ngInject */
     function config($stateProvider, $urlRouterProvider) {
-  
+      var getUrl = window.location;
+      var baseUrl = getUrl .protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+
       $stateProvider
         .state('main', {
           url: '/main',
           views: {
             'header': {
-              templateUrl: 'js/components/header/headerTmpl.html'
+              templateUrl: baseUrl + '/js/components/header/headerTmpl.html'
             },
             'content': {
-              templateUrl: 'js/components/main/mainTmpl.html',
+              templateUrl: baseUrl + '/js/components/main/mainTmpl.html',
               controller: 'MainCtrl',
               controllerAs: '$ctrl'       
             }
@@ -26,10 +28,10 @@
           url: '/add-info/issue/:index',
           views: {
             'header': {
-              templateUrl: 'js/components/header/headerTmpl.html'
+              templateUrl: baseUrl + '/js/components/header/headerTmpl.html'
             },
             'content': {
-              templateUrl: 'js/components/add-info/AddInfoTmpl.html',
+              templateUrl: baseUrl + '/js/components/add-info/addInfoTmpl.html',
               controller: 'AddInfoCtrl',
               controllerAs: '$ctrl'         
             }

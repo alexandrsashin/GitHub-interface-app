@@ -7,8 +7,11 @@
     .controller('MainCtrl', MainCtrl);
     
     /* @ngInject */
-    function MainCtrl($http, pageService) {
+    function MainCtrl($http, $element, pageService) {
       var self = this;
+
+      // use this hack, because ng-keydown, ng-keypress don't work in IE11+
+      $($element).find('.search__input').on('keyup', bspClick)
 
       // Loading indicator
       self.loading = false;
@@ -29,9 +32,8 @@
       };
 
       // Function that detects backpaces during input process
-      self.bspClick = function(event) {
-        
-        if (self.appData.search.split(' ')[0].length > 0 && event.key === ' ') {
+      function bspClick(event) {
+        if (self.appData.search.split(' ')[0].length > 0 && event.keyCode === 32) {
           self.appData.errorUser = false;
           self.appData.errorRepo = false;
           self.appData.issueArr = '';     
@@ -87,6 +89,9 @@
 
       // Loading issues array
       self.loadedIssuesData = function(repo) {
+
+        // Hack for mobile devices
+        self.appData.name = self.appData.name ? self.appData.name : self.appData.search.split(' ')[0];
 
         $http
           .get('https://api.github.com/repos/' + self.appData.name + '/' + repo + '/issues')

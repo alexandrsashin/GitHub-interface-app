@@ -65,7 +65,8 @@ gulp.task("serve", function() {
 });
 
 gulp.task("script-lib", function() {
-  return gulp.src(['src/js/lib/lodash.min.js', // library with built-in useful methods
+  return gulp.src(['src/js/lib/jquery.min.js',
+                  'src/js/lib/lodash.min.js', // library with built-in useful methods
                   'src/js/lib/angular.min.js',
                   'src/js/lib/angular-ui-router.min.js'])
     .pipe(concat('lib.js'))

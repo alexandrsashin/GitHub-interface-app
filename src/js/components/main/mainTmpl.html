@@ -7,7 +7,6 @@
       <input type="text" 
              id="search"
              class="search__input" 
-             ng-keypress="$ctrl.bspClick($event)"
              ng-model="$ctrl.appData.search">
       <button class="btn search__btn"
               ng-click="$ctrl.getIssues('search', $ctrl.appData.search)">Поиск
